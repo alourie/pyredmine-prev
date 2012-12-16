@@ -18,24 +18,29 @@ class _Project:
         self.updateon = None
 
     def newIssue(self, **data):
-        '''Create a new issue for this project from the given pairs.
+        '''Create a new issue for this project from the given values.
 
-        newIssue( subject="The Arguments Department is closed", description="Good morning.")
+        newIssue(subject="The Arguments Department is closed",
+                 description="Good morning.",
+                 )
 
         Possible keys are:
          subject
          description
          status_id
          priority_id
-         tracker_id - can be looked up from name in Project.trackers[name]
+         tracker_id - can be looked up from name in Project.trackers[name],
+            basically an issue type (bug, feature, etc)
          assigned_to_id
 
-        Unfortunately, there is no easy way to discover the valid values for most of the _id fields'''
+        Unfortunately, there is no easy way to discover the valid values
+        for most of the _id fields'''
 
         print "Got params: %s" % data
 
         if not 'subject' in data.keys():
-            raise TypeError('Subject field cannot be blank.  Use newIssue(subject=str) to create a new issue.')
+            raise TypeError('Subject field cannot be blank.'
+                            ' Use newIssue(subject=str) to create a new issue.')
 
         # TODO: what is the project_id ?? Should be initialized, of course
         data['project_id'] = self.id
@@ -122,10 +127,7 @@ class Redmine:
         self.readonlytest = readonlytest
         self.projects = {}
         self.projectsID = {}
-        self.projectsXML = {}
-
         self.issuesID = {}
-        self.issuesXML = {}
 
         # Status ID from a default install
         self.ISSUE_STATUS_ID_NEW = 1
@@ -144,7 +146,7 @@ class Redmine:
         if not password:
             password = '12345'  # the same combination on my luggage!  (dummy value)
 
-        if(username and password):
+        if username and password:
             #realm = 'Redmine API'
             # create a password manager
             password_mgr = urllib2.HTTPPasswordMgrWithDefaultRealm()
